@@ -1,0 +1,99 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;h++;hm;inl;inc;ipp;xsd</Extensions>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="Header Files\Interfaces">
+      <UniqueIdentifier>{f8e0c384-7c5a-49b0-b59b-099f46d119ee}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\DefaultImplementation">
+      <UniqueIdentifier>{23683b1d-e0fe-4f0e-b501-14bd4afe94a9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\DefaultImplementation">
+      <UniqueIdentifier>{2ef2abff-bb0f-4e7b-b61d-c407ec211a16}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Projekt.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ObjectFactory.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="EventHandler.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="DefaultCabin.cpp">
+      <Filter>Source Files\DefaultImplementation</Filter>
+    </ClCompile>
+    <ClCompile Include="DefaultFloor.cpp">
+      <Filter>Source Files\DefaultImplementation</Filter>
+    </ClCompile>
+    <ClCompile Include="DefaultPeopleGenerator.cpp">
+      <Filter>Source Files\DefaultImplementation</Filter>
+    </ClCompile>
+    <ClCompile Include="DefaultPerson.cpp">
+      <Filter>Source Files\DefaultImplementation</Filter>
+    </ClCompile>
+    <ClCompile Include="OneElevatorManager.cpp">
+      <Filter>Source Files\DefaultImplementation</Filter>
+    </ClCompile>
+    <ClCompile Include="IPhysicalCabin.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="ObjectFactory.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="EventHandler.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ICabin.h">
+      <Filter>Header Files\Interfaces</Filter>
+    </ClInclude>
+    <ClInclude Include="IElevatorManager.h">
+      <Filter>Header Files\Interfaces</Filter>
+    </ClInclude>
+    <ClInclude Include="IFloor.h">
+      <Filter>Header Files\Interfaces</Filter>
+    </ClInclude>
+    <ClInclude Include="IPeopleGenerator.h">
+      <Filter>Header Files\Interfaces</Filter>
+    </ClInclude>
+    <ClInclude Include="IPerson.h">
+      <Filter>Header Files\Interfaces</Filter>
+    </ClInclude>
+    <ClInclude Include="DefaultCabin.h">
+      <Filter>Header Files\DefaultImplementation</Filter>
+    </ClInclude>
+    <ClInclude Include="DefaultFloor.h">
+      <Filter>Header Files\DefaultImplementation</Filter>
+    </ClInclude>
+    <ClInclude Include="DefaultPeopleGenerator.h">
+      <Filter>Header Files\DefaultImplementation</Filter>
+    </ClInclude>
+    <ClInclude Include="DefaultPerson.h">
+      <Filter>Header Files\DefaultImplementation</Filter>
+    </ClInclude>
+    <ClInclude Include="OneElevatorManager.h">
+      <Filter>Header Files\DefaultImplementation</Filter>
+    </ClInclude>
+    <ClInclude Include="IPhysicalCabin.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="ClassDiagram.cd" />
+  </ItemGroup>
+</Project>

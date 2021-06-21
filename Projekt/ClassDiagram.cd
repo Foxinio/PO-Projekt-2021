@@ -1,0 +1,109 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="ICabin">
+    <Position X="4" Y="6.5" Width="1.5" />
+    <NestedTypes>
+      <Enum Name="ICabin::direction" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>ICabin.h</NewMemberFileName>
+        </TypeIdentifier>
+      </Enum>
+    </NestedTypes>
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAAAAoAAAAAAAAAAAABAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>ICabin.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="IFloor">
+    <Position X="4" Y="2.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAFAAA=</HashCode>
+      <FileName>IFloor.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="IElevatorFacade">
+    <Position X="7" Y="2.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAA=</HashCode>
+      <FileName>IElevatorManager.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="IElevatorManager">
+    <Position X="7" Y="4.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAEAAAAAAAEAAAAAAAAAAAAIAACAEABAAA=</HashCode>
+      <FileName>IElevatorManager.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ObjectFactory">
+    <Position X="9.75" Y="7.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAABAAAAAAAAAAAAAAAAACIAAAAAAAAAAACAA=</HashCode>
+      <FileName>ObjectFactory.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Event&lt;returnType, ...Args&gt;">
+    <Position X="15.5" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAEIAAAAAAAgAAAAAACAAgAAAAAAA=</HashCode>
+      <FileName>EventHandler.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="EventHandler&lt;...functionArgs&gt;">
+    <Position X="15.5" Y="2.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAECAAAAAIAAABAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>EventHandler.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="IPerson">
+    <Position X="4" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>IAAAAAAACAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAACAA=</HashCode>
+      <FileName>IPerson.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="IPeopleGenerator">
+    <Position X="4" Y="9.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>IPeopleGenerator.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="OneElevatorManager">
+    <Position X="7" Y="6.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAEAAAAAAAMgAAAAAAAAAAAIAACAEABCAA=</HashCode>
+      <FileName>OneElevatorManager.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DefaultPerson">
+    <Position X="1.5" Y="5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>IAAAAAAACAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAACAA=</HashCode>
+      <FileName>DefaultPerson.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DefaultFloor">
+    <Position X="1.5" Y="2.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAAAAEAFAAA=</HashCode>
+      <FileName>DefaultFloor.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DefaultPeopleGenerator">
+    <Position X="1.5" Y="9.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>DefaultPeopleGenerator.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DefaultCabin">
+    <Position X="1.5" Y="7" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAQAAAAIAAQAAAAAAAAABAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>DefaultCabin.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>
