@@ -9,7 +9,7 @@ class IPhysicalCabin :
 {
 private:
 	double position;
-	double velosity;
+	double velocity;
 	double acceleration;
 
 	double GetAcceleration();
@@ -17,18 +17,16 @@ private:
 protected:
 
 
-	virtual inline const double GetMaxVelocity() const noexcept = 0;
-	virtual inline const double GetMaxAcceleration() const noexcept = 0;
-	virtual std::optional<IFloor::floor> GetCurrentTargetFloor() = 0;
+	virtual std::optional<Units::floor> GetCurrentTargetFloor() = 0;
 
-	virtual void PhysicalUpdate(IElevatorManager::deltaTime deltaTime) final;
+	virtual void UpdatePosition(Time::deltaTime deltaTime) final;
+	virtual bool HasArrivedAtDestination() final;
 	
 	virtual void ArrivedAtFloor() = 0;
 public:
-	virtual direction GetDirection();
+	virtual Units::direction GetDirection();
 
 private:
-	void UpdatePosition(IElevatorManager::deltaTime deltaTime);
 
 };
 

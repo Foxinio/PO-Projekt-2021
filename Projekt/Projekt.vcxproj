@@ -144,18 +144,17 @@
     <ClCompile Include="DefaultFloor.cpp" />
     <ClCompile Include="DefaultPerson.cpp" />
     <ClCompile Include="DefaultPeopleGenerator.cpp" />
-    <ClCompile Include="EventHandler.cpp" />
     <ClCompile Include="IPhysicalCabin.cpp" />
     <ClCompile Include="ObjectFactory.cpp" />
     <ClCompile Include="OneElevatorManager.cpp" />
     <ClCompile Include="Projekt.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Constants.h" />
     <ClInclude Include="DefaultCabin.h" />
     <ClInclude Include="DefaultFloor.h" />
     <ClInclude Include="DefaultPerson.h" />
     <ClInclude Include="DefaultPeopleGenerator.h" />
-    <ClInclude Include="EventHandler.h" />
     <ClInclude Include="ICabin.h" />
     <ClInclude Include="IPerson.h" />
     <ClInclude Include="IElevatorManager.h" />
@@ -167,6 +166,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="ClassDiagram.cd" />
+    <None Include="ClassDiagram1.cd" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

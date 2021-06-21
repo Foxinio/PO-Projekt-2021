@@ -30,9 +30,6 @@
     <ClCompile Include="ObjectFactory.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="EventHandler.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="DefaultCabin.cpp">
       <Filter>Source Files\DefaultImplementation</Filter>
     </ClCompile>
@@ -54,9 +51,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ObjectFactory.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="EventHandler.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="ICabin.h">
@@ -92,8 +86,12 @@
     <ClInclude Include="IPhysicalCabin.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Constants.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="ClassDiagram.cd" />
+    <None Include="ClassDiagram1.cd" />
   </ItemGroup>
 </Project>

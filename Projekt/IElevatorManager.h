@@ -3,36 +3,29 @@
 #include <chrono>
 #include <optional>
 
+#include "Constants.h"
 #include "IPerson.h"
-#include "IFloor.h"
-#include "ICabin.h"
+
+class IFloor;
+class ICabin;
 
 class IElevatorFacade {
 	public:
 
-		virtual void CallElevator(std::unique_ptr<IPerson>&& person, IFloor::floor floorNumber) = 0;
+		virtual void CallElevator(std::unique_ptr<IPerson>&& person, Units::floor floorNumber) = 0;
 };
 
 
 class IElevatorManager : public IElevatorFacade
 {
 	public:
-		using deltaTime = std::chrono::milliseconds;
-		using timePoint = std::chrono::time_point<std::chrono::high_resolution_clock, std::chrono::milliseconds>;
-		class clock : public std::chrono::high_resolution_clock {
-			using internalClock = std::chrono::high_resolution_clock;
-		public:
-			static inline timePoint now() { 
-				return std::chrono::time_point_cast<IElevatorManager::timePoint::duration>(internalClock::now()); 
-			}
-		};
 
 		virtual void Start() = 0;
 		virtual void Stop() = 0;
 
 
-		virtual std::unique_ptr<IPerson> GetCustomer(IFloor::floor floor, ICabin::direction cabinDirection) = 0;
-		virtual std::optional<const IPerson&> PeekCustomer(IFloor::floor floor, ICabin::direction cabinDirection) const noexcept = 0;
+		virtual std::unique_ptr<IPerson> GetCustomer(Units::floor floor, Units::direction cabinDirection) = 0;
+		virtual std::optional<const IPerson*> PeekCustomer(Units::floor floor, Units::direction cabinDirection) const noexcept = 0;
 
 
 		// events

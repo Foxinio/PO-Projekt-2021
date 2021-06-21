@@ -10,9 +10,9 @@ OneElevatorManager::OneElevatorManager() :
 		floors(), 
 		customerGenerator(nullptr),
 		intervalDirstibution(),
-		nextCustomerArrivalTimePoint(std::chrono::time_point_cast<IElevatorManager::timePoint::duration>(clock::now())),
+		nextCustomerArrivalTimePoint(Time::clock::now()),
 		randomEngine(ObjectFactory::seed),
-		worker(nullptr, JoinAndDeleteThread),
+		worker(),
 		working(false) { }
 
 OneElevatorManager::OneElevatorManager(std::unique_ptr<ICabin>&& cabin,
@@ -20,13 +20,14 @@ OneElevatorManager::OneElevatorManager(std::unique_ptr<ICabin>&& cabin,
 													std::unique_ptr<IPeopleGenerator>&& customerGenerator,
 													std::pair<int, int> normalDistributionIntervalParams) :
 		cabin(std::move(cabin)),
-		floors(std::move(floorVector)),
+		floors(),
 		customerGenerator(std::move(customerGenerator)),
 		intervalDirstibution((double)normalDistributionIntervalParams.first/1000, (double)normalDistributionIntervalParams.second/1000),
-		nextCustomerArrivalTimePoint(std::chrono::time_point_cast<IElevatorManager::timePoint::duration>(clock::now())),
+		nextCustomerArrivalTimePoint(Time::clock::now()),
 		randomEngine(ObjectFactory::seed),
-		worker(nullptr, JoinAndDeleteThread),
+		worker(),
 		working(false) {
+	std::move(std::begin(floorVector), std::end(floorVector), std::back_inserter(floors));
 	assert(cabin != nullptr);
 	assert(customerGenerator != nullptr);
 }
@@ -37,7 +38,7 @@ OneElevatorManager::OneElevatorManager(std::unique_ptr<ICabin>&& cabin,
 //		floors(std::move(arg.floors)),
 //		customerGenerator(std::move(arg.customerGenerator)),
 //		intervalDirstibution(std::move(arg.intervalDirstibution)),
-//		nextCustomerArrivalTimePoint(std::chrono::time_point_cast<IElevatorManager::timePoint::duration>(clock::now())),
+//		nextCustomerArrivalTimePoint(std::chrono::time_point_cast<Time::timePoint::duration>(clock::now())),
 //		randomEngine(std::move(arg.randomEngine)),
 //		worker(std::move(arg.worker)),
 //		working(arg.working) { }
@@ -48,7 +49,7 @@ OneElevatorManager::OneElevatorManager(std::unique_ptr<ICabin>&& cabin,
 //	floors = std::move(arg.floors);
 //	customerGenerator = std::move(arg.customerGenerator);
 //	intervalDirstibution = std::move(arg.intervalDirstibution);
-//	nextCustomerArrivalTimePoint = std::chrono::time_point_cast<IElevatorManager::timePoint::duration>(clock::now());
+//	nextCustomerArrivalTimePoint = std::chrono::time_point_cast<Time::timePoint::duration>(clock::now());
 //	randomEngine = std::move(std::mt19937_64(ObjectFactory::seed));
 //	worker = std::move(arg.worker);
 //	working = arg.working;
@@ -56,24 +57,31 @@ OneElevatorManager::OneElevatorManager(std::unique_ptr<ICabin>&& cabin,
 //	arg.working = false;
 //}
 
+OneElevatorManager::~OneElevatorManager() {
+	Stop();
+}
+
 void OneElevatorManager::Start() {
 	working = true;
-	worker = { new std::thread{&Update}, JoinAndDeleteThread };
+	worker = std::thread{ [this]() {
+			Update();
+		} 
+	};
 }
 void OneElevatorManager::Stop() {
 	working = false;
-	worker->join();
+	worker.join();
 }
 
-void OneElevatorManager::CallElevator(std::unique_ptr<IPerson>&& person, IFloor::floor floorNumber) {
+void OneElevatorManager::CallElevator(std::unique_ptr<IPerson>&& person, Units::floor floorNumber) {
 	cabin->CallCabin(floorNumber);
 	floors[floorNumber]->JoinQueue(std::move(person));
 }
 
-std::unique_ptr<IPerson> OneElevatorManager::GetCustomer(IFloor::floor floor, ICabin::direction cabinDirection) {
+std::unique_ptr<IPerson> OneElevatorManager::GetCustomer(Units::floor floor, Units::direction cabinDirection) {
 	return std::move(floors[floor]->GetCustomer(cabinDirection));
 }
-std::optional<const IPerson&> OneElevatorManager::PeekCustomer(IFloor::floor floor, ICabin::direction cabinDirection) const noexcept {
+std::optional<const IPerson*> OneElevatorManager::PeekCustomer(Units::floor floor, Units::direction cabinDirection) const noexcept {
 	return floors[floor]->PeekCustomer(cabinDirection);
 }
 
@@ -92,7 +100,7 @@ void OneElevatorManager::PeopleLeftCabin(const ICabin& caller) {
 
 void OneElevatorManager::Update() {
 	while (working) {
-		auto timePoint = IElevatorManager::clock::now();
+		auto timePoint = Time::clock::now();
 
 		if (this->nextCustomerArrivalTimePoint < timePoint) {
 			GenerateNewCustomer(timePoint);
@@ -103,18 +111,12 @@ void OneElevatorManager::Update() {
 	std::clog << "Simulation Ended";
 }
 
-void OneElevatorManager::JoinAndDeleteThread(std::thread* t) {
-	working = false;
-	if(t->joinable()) t->join();
-	delete t;
-}
-
-void OneElevatorManager::GenerateNewCustomer(IElevatorManager::timePoint timePoint) {
+void OneElevatorManager::GenerateNewCustomer(Time::timePoint timePoint) {
 	auto customer = customerGenerator->GeneratePerson();
 	auto floor = customer->GetStartingFloor();
 	CallElevator(std::move(customer), floor);
 
 	// must multiply by 100 because intervalDistribution returns distribution in seconds
-	IElevatorManager::deltaTime interval = IElevatorManager::deltaTime((long)(intervalDirstibution(randomEngine) * 1000));
-	nextCustomerArrivalTimePoint = IElevatorManager::clock::now() + interval;
+	Time::deltaTime interval = Time::deltaTime((long)(intervalDirstibution(randomEngine) * 1000));
+	nextCustomerArrivalTimePoint = Time::clock::now() + interval;
 }

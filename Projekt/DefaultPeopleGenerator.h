@@ -1,18 +1,20 @@
 #pragma once
-#include "IPeopleGenerator.h"
 #include <random>
+
+#include "Constants.h"
+#include "IPeopleGenerator.h"
 
 class DefaultPeopleGenerator :
     public IPeopleGenerator
 {
-	std::mt19937 g;
-	std::uniform_int_distribution<IPerson::weight> weightDistribution;
-	std::uniform_int_distribution<IFloor::floor> floorDistribution;
+	std::mt19937 randomEngine;
+	std::uniform_int_distribution<Units::weight> weightDistribution;
+	std::uniform_int_distribution<Units::floor> floorDistribution;
 
 public:
-	DefaultPeopleGenerator(std::pair<IFloor::floor, IFloor::floor> floors);
-	DefaultPeopleGenerator(std::pair<IFloor::floor, IFloor::floor> floors,
-								  std::pair<IPerson::weight, IPerson::weight> weightRange);
+	DefaultPeopleGenerator(std::pair<Units::floor, Units::floor> floors);
+	DefaultPeopleGenerator(std::pair<Units::floor, Units::floor> floors,
+								  std::pair<Units::weight, Units::weight> weightRange);
 
 	virtual std::unique_ptr<IPerson> GeneratePerson();
 };

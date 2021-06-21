@@ -3,26 +3,20 @@
 
 #include <cassert>
 
-inline const double DefaultCabin::GetMaxVelocity() const noexcept {
-	return std::numeric_limits<double>::max();
-}
-inline const double DefaultCabin::GetMaxAcceleration() const noexcept {
-	return 2.0;
-}
-std::optional<IFloor::floor> DefaultCabin::GetCurrentTargetFloor() {
+std::optional<Units::floor> DefaultCabin::GetCurrentTargetFloor() {
 	if (destinationQueue.empty()) {
 		return std::nullopt;
 	}
-	return this->destinationQueue.top();
+	return std::optional<Units::floor>{ this->destinationQueue.top() };
 }
 
-DefaultCabin::DefaultCabin(std::shared_ptr<IElevatorManager> systemManager, IFloor::floor startingFloor) :
+DefaultCabin::DefaultCabin(std::shared_ptr<IElevatorManager> systemManager, Units::floor startingFloor) :
 		onBoardWeight(0),
 		passangers(),
 		destinationQueue(),
 		destinationQueueMutex(),
 		systemManager(systemManager),
-		lastUpdateTimePoint(IElevatorManager::clock::now()) { }
+		lastUpdateTimePoint(Time::clock::now()) { }
 
 void DefaultCabin::ArrivedAtFloor() {
 	systemManager->ElevatorArrived(*this);
@@ -46,7 +40,7 @@ void DefaultCabin::EnterCabin(std::unique_ptr<IPerson>&& customer) {
 	passangers.push_back(std::move(customer));
 }
 
-void DefaultCabin::EmptyCabin(IFloor::floor currentFloor) {
+void DefaultCabin::EmptyCabin(Units::floor currentFloor) {
 	auto iter = passangers.begin();
 	while (iter != passangers.end()) {
 		if ((*iter)->GetTarget() == currentFloor) {
@@ -61,16 +55,16 @@ void DefaultCabin::EmptyCabin(IFloor::floor currentFloor) {
 	}
 	systemManager->PeopleLeftCabin(*this);
 }
-void DefaultCabin::FillCabin(IFloor::floor currentFloor) {
+void DefaultCabin::FillCabin(Units::floor currentFloor) {
 	while (true) {
 		auto nextCustomer = systemManager->PeekCustomer(currentFloor, IPhysicalCabin::GetDirection());
 
-		if (!nextCustomer) {
+		if (!nextCustomer.has_value()) {
 			break;
 		}
 
-		if (onBoardWeight + nextCustomer.value().GetWeight() < ObjectFactory::maxWeight &&
-			 nextCustomer.value().DoesEnter(IPhysicalCabin::GetDirection())) {
+		if (onBoardWeight + nextCustomer.value()->GetWeight() < ObjectFactory::maxWeight &&
+			 nextCustomer.value()->DoesEnter(IPhysicalCabin::GetDirection())) {
 			EnterCabin(std::move(systemManager->GetCustomer(currentFloor, IPhysicalCabin::GetDirection())));
 		}
 		else {
@@ -79,15 +73,20 @@ void DefaultCabin::FillCabin(IFloor::floor currentFloor) {
 	}
 }
 
-void DefaultCabin::Update(IElevatorManager::timePoint time) {
-	if(GetCurrentTargetFloor()) {
+void DefaultCabin::Update(Time::timePoint time) {
+	if(GetCurrentTargetFloor().has_value()) {
 		auto deltaTime = time - lastUpdateTimePoint;
-		IPhysicalCabin::PhysicalUpdate(deltaTime);
+		IPhysicalCabin::UpdatePosition(deltaTime);
 	}
 	else {
 		systemManager->ElevatorWithoutOrders(*this);
 	}
-	lastUpdateTimePoint = IElevatorManager::clock::now();
+
+	if (IPhysicalCabin::HasArrivedAtDestination()) {
+		ArrivedAtFloor();
+	}
+
+	lastUpdateTimePoint = Time::clock::now();
 }
 
 template<class T, class S, class C>
@@ -102,24 +101,24 @@ S& Container(std::priority_queue<T, S, C>& q) {
 }
 
 
-void DefaultCabin::CallCabin(IFloor::floor floor) {
+void DefaultCabin::CallCabin(Units::floor floor) {
 	std::unique_lock<std::mutex> lock(destinationQueueMutex);
 	auto& ref = Container(destinationQueue);
 	if(std::find(ref.begin(), ref.end(), floor) == ref.end())
 		destinationQueue.push(floor);
 }
 
-bool DefaultCabin::priority_queueLess(const IFloor::floor& pushing, const IFloor::floor& inPlace) {
+bool DefaultCabin::priority_queueLess(const Units::floor& pushing, const Units::floor& inPlace) {
 	auto currentTarget = GetCurrentTargetFloor();
 
-	if (!currentTarget) {
+	if (!currentTarget.has_value()) {
 		return true;
 	}
 
 	auto dir = GetDirection();
 
-	if (dir == ICabin::direction::Up) {
-		if (pushing > currentTarget) {
+	if (dir == Units::direction::Up) {
+		if (pushing > currentTarget.value()) {
 			return pushing < inPlace;
 		}
 		else {
@@ -127,7 +126,7 @@ bool DefaultCabin::priority_queueLess(const IFloor::floor& pushing, const IFloor
 		}
 	}
 	else {
-		if (pushing > currentTarget) {
+		if (pushing > currentTarget.value()) {
 			return pushing >= inPlace;
 		}
 		else {

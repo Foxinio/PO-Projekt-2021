@@ -1,7 +1,7 @@
 #pragma once
 #include <memory>
 
-#include "IPerson.h"
+class IPerson;
 
 class IPeopleGenerator
 {

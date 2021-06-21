@@ -1,37 +1,37 @@
 #include "IPhysicalCabin.h"
 #include "ObjectFactory.h"
 
-void IPhysicalCabin::UpdatePosition(IElevatorManager::deltaTime deltaTime) {
+void IPhysicalCabin::UpdatePosition(Time::deltaTime deltaTime) {
 	acceleration = GetAcceleration();
-	velosity += acceleration * std::chrono::duration_cast<std::chrono::duration<double>>(deltaTime).count();
-	position += velosity * std::chrono::duration_cast<std::chrono::duration<double>>(deltaTime).count();
-}
-
-void IPhysicalCabin::PhysicalUpdate(IElevatorManager::deltaTime deltaTime) {
-
-	UpdatePosition(deltaTime);
-
-	if (Double::isEqual(position, GetCurrentTargetFloor().value())) {
-		this->ArrivedAtFloor();
+	// After cast time is in seconds
+	velocity += acceleration * std::chrono::duration_cast<std::chrono::duration<double>>(deltaTime).count();
+	if (std::abs(velocity) > ObjectFactory::maxVelocity) {
+		velocity = ObjectFactory::maxVelocity * (velocity < 0 ? -1 : 1);
 	}
+	// After cast time is in seconds
+	position += velocity * std::chrono::duration_cast<std::chrono::duration<double>>(deltaTime).count();
 }
 
-ICabin::direction IPhysicalCabin::GetDirection() {
+bool IPhysicalCabin::HasArrivedAtDestination() {
+	return Double::isEqual(position, GetCurrentTargetFloor().value());
+}
+
+Units::direction IPhysicalCabin::GetDirection() {
 	double abs = (double)GetCurrentTargetFloor().value() - position;
 	if (abs < 0) {
-		return ICabin::direction::Down;
+		return Units::direction::Down;
 	}
 	else {
-		return ICabin::direction::Up;
+		return Units::direction::Up;
 	}
 }
 
 double IPhysicalCabin::GetAcceleration() {
-	double atLeastDistance = velosity * velosity / GetMaxAcceleration();
-	if(GetDirection() == ICabin::direction::Up) {
-		return GetMaxAcceleration() * (this->position + atLeastDistance >= GetCurrentTargetFloor() ? -1 : 1);
+	double atLeastDistance = velocity * velocity / ObjectFactory::maxAcceleration;
+	if(GetDirection() == Units::direction::Up) {
+		return ObjectFactory::maxAcceleration * (this->position + atLeastDistance >= GetCurrentTargetFloor() ? -1 : 1);
 	}
 	else {
-		return GetMaxAcceleration() * (this->position - atLeastDistance <= GetCurrentTargetFloor() ? 1 : -1);
+		return ObjectFactory::maxAcceleration * (this->position - atLeastDistance <= GetCurrentTargetFloor() ? 1 : -1);
 	}
 }

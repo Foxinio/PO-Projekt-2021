@@ -3,7 +3,7 @@
   <Class Name="ICabin">
     <Position X="4" Y="6.5" Width="1.5" />
     <NestedTypes>
-      <Enum Name="ICabin::direction" Collapsed="true">
+      <Enum Name="Units::direction" Collapsed="true">
         <TypeIdentifier>
           <NewMemberFileName>ICabin.h</NewMemberFileName>
         </TypeIdentifier>

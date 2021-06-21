@@ -1,6 +1,7 @@
 #pragma once
 #include <memory>
 #include <queue>
+#include <optional>
 
 #include "IFloor.h"
 
@@ -13,7 +14,7 @@ public:
 	DefaultFloor();
 
 	virtual void JoinQueue(std::unique_ptr<IPerson>&& person);
-	virtual std::unique_ptr<IPerson> GetCustomer(ICabin::direction cabinDirection);
-	virtual std::optional<const IPerson&> PeekCustomer(ICabin::direction cabinDirection) const;
+	virtual std::unique_ptr<IPerson> GetCustomer(Units::direction cabinDirection);
+	virtual std::optional<const IPerson*> PeekCustomer(Units::direction cabinDirection) const;
 };
 

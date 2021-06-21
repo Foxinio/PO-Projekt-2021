@@ -15,14 +15,13 @@ class OneElevatorManager :
    std::vector<std::unique_ptr<IFloor>> floors;
 
 
-	void JoinAndDeleteThread(std::thread* t);
 
-	std::unique_ptr<std::thread, decltype(JoinAndDeleteThread)> worker;
+	std::thread worker;
 	bool working;
 
 	std::mt19937_64 randomEngine;
 	std::normal_distribution<double> intervalDirstibution;
-	IElevatorManager::timePoint nextCustomerArrivalTimePoint;
+	Time::timePoint nextCustomerArrivalTimePoint;
 
 public:
 
@@ -39,15 +38,15 @@ public:
 	OneElevatorManager& operator=(const OneElevatorManager& arg) = delete;
 	OneElevatorManager& operator=(OneElevatorManager&& arg) = default;
 
-	~OneElevatorManager() = default;
+	~OneElevatorManager();
 
 	virtual void Start();
 	virtual void Stop();
 
-	virtual void CallElevator(std::unique_ptr<IPerson>&& person, IFloor::floor floorNumber);
+	virtual void CallElevator(std::unique_ptr<IPerson>&& person, Units::floor floorNumber);
 
-	virtual std::unique_ptr<IPerson> GetCustomer(IFloor::floor floor, ICabin::direction cabinDirection);
-	virtual std::optional<const IPerson&> PeekCustomer(IFloor::floor floor, ICabin::direction cabinDirection) const noexcept;
+	virtual std::unique_ptr<IPerson> GetCustomer(Units::floor floor, Units::direction cabinDirection);
+	virtual std::optional<const IPerson*> PeekCustomer(Units::floor floor, Units::direction cabinDirection) const noexcept;
 
 
 	// events
@@ -57,6 +56,6 @@ public:
 
 private:
 	void Update();
-	void GenerateNewCustomer(IElevatorManager::timePoint timePoint);
+	void GenerateNewCustomer(Time::timePoint timePoint);
 };
 
