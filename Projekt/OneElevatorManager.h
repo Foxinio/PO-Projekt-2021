@@ -27,7 +27,7 @@ public:
 
 	OneElevatorManager();
 
-	OneElevatorManager(std::unique_ptr<ICabin>&& cabin, 
+	OneElevatorManager(//std::unique_ptr<ICabin>&& cabin, 
 							 std::vector<std::unique_ptr<IFloor>>&& floorVector,
 							 std::unique_ptr<IPeopleGenerator>&& customerGenerator,
 							 std::pair<int,int> normalDistributionIntervalParams);
@@ -46,7 +46,7 @@ public:
 	virtual void CallElevator(std::unique_ptr<IPerson>&& person, Units::floor floorNumber);
 
 	virtual std::unique_ptr<IPerson> GetCustomer(Units::floor floor, Units::direction cabinDirection);
-	virtual std::optional<const IPerson*> PeekCustomer(Units::floor floor, Units::direction cabinDirection) const noexcept;
+	virtual std::optional<const IPerson*> PeekCustomer(Units::floor floor, Units::direction cabinDirection) const;
 
 
 	// events

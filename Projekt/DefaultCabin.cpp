@@ -2,6 +2,9 @@
 #include "ObjectFactory.h"
 
 #include <cassert>
+#include <sstream>
+#include <iostream>
+#include <iomanip>
 
 std::optional<Units::floor> DefaultCabin::GetCurrentTargetFloor() {
 	if (destinationQueue.empty()) {
@@ -16,7 +19,9 @@ DefaultCabin::DefaultCabin(std::shared_ptr<IElevatorManager> systemManager, Unit
 		destinationQueue(),
 		destinationQueueMutex(),
 		systemManager(systemManager),
-		lastUpdateTimePoint(Time::clock::now()) { }
+		lastUpdateTimePoint(Time::clock::now()),
+		tag(ObjectFactory::GetCabinTag()),
+		lastLogUpdate(Time::clock::now()) { }
 
 void DefaultCabin::ArrivedAtFloor() {
 	systemManager->ElevatorArrived(*this);
@@ -26,12 +31,18 @@ void DefaultCabin::ArrivedAtFloor() {
 	auto currentFloor = GetCurrentTargetFloor().value();
 	this->destinationQueue.pop();
 	
+	using namespace std::string_literals;
+	ObjectFactory::PrintMessage("Cabin#"s + ObjectFactory::TagToString(tag, 1), "Cabin arrived on floor "s + std::to_string(currentFloor) + ". Begining emptying.");
+
 	lock.unlock();
+
 
 	systemManager->ElevatorArrived(*this);
 
 	EmptyCabin(currentFloor);
+	ObjectFactory::PrintMessage("Cabin#"s + ObjectFactory::TagToString(tag, 1), "Cabin emptied. Begining filling.");
 	FillCabin(currentFloor);
+	ObjectFactory::PrintMessage("Cabin#"s + ObjectFactory::TagToString(tag, 1), "Cabin filled.");
 }
 
 void DefaultCabin::EnterCabin(std::unique_ptr<IPerson>&& customer) {
@@ -64,7 +75,8 @@ void DefaultCabin::FillCabin(Units::floor currentFloor) {
 		}
 
 		if (onBoardWeight + nextCustomer.value()->GetWeight() < ObjectFactory::maxWeight &&
-			 nextCustomer.value()->DoesEnter(IPhysicalCabin::GetDirection())) {
+			 nextCustomer.value()->DoesEnter(IPhysicalCabin::GetDirection()) &&
+			 this->passangers.size() < ObjectFactory::CabinCapacity) {
 			EnterCabin(std::move(systemManager->GetCustomer(currentFloor, IPhysicalCabin::GetDirection())));
 		}
 		else {
@@ -86,6 +98,15 @@ void DefaultCabin::Update(Time::timePoint time) {
 		ArrivedAtFloor();
 	}
 
+	using namespace std::string_literals;
+	using namespace std::chrono_literals;
+	if (lastLogUpdate + ObjectFactory::cabinUpdateFrequency < Time::clock::now()) {
+		auto message = (std::stringstream() << "Update: position " << std::setprecision(3) << std::fixed << GetPosition()
+			<< "floor, velocity " << GetVelocity() << "floors/s.").str();
+
+		ObjectFactory::PrintMessage("Cabin#"s + ObjectFactory::TagToString(tag, 1), message);
+		lastLogUpdate = Time::clock::now();
+	}
 	lastUpdateTimePoint = Time::clock::now();
 }
 

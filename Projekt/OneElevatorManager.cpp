@@ -15,21 +15,18 @@ OneElevatorManager::OneElevatorManager() :
 		worker(),
 		working(false) { }
 
-OneElevatorManager::OneElevatorManager(std::unique_ptr<ICabin>&& cabin,
-													std::vector<std::unique_ptr<IFloor>>&& floorVector,
+OneElevatorManager::OneElevatorManager(std::vector<std::unique_ptr<IFloor>>&& floorVector,
 													std::unique_ptr<IPeopleGenerator>&& customerGenerator,
 													std::pair<int, int> normalDistributionIntervalParams) :
-		cabin(std::move(cabin)),
+		cabin(ObjectFactory::GetCabin(std::shared_ptr<OneElevatorManager>(this))),
 		floors(),
 		customerGenerator(std::move(customerGenerator)),
-		intervalDirstibution((double)normalDistributionIntervalParams.first/1000, (double)normalDistributionIntervalParams.second/1000),
+		intervalDirstibution((double)normalDistributionIntervalParams.first, (double)normalDistributionIntervalParams.second),
 		nextCustomerArrivalTimePoint(Time::clock::now()),
 		randomEngine(ObjectFactory::seed),
 		worker(),
 		working(false) {
 	std::move(std::begin(floorVector), std::end(floorVector), std::back_inserter(floors));
-	assert(cabin != nullptr);
-	assert(customerGenerator != nullptr);
 }
 
 //
@@ -62,6 +59,8 @@ OneElevatorManager::~OneElevatorManager() {
 }
 
 void OneElevatorManager::Start() {
+	assert(cabin != nullptr);
+	assert(customerGenerator != nullptr);
 	working = true;
 	worker = std::thread{ [this]() {
 			Update();
@@ -70,7 +69,7 @@ void OneElevatorManager::Start() {
 }
 void OneElevatorManager::Stop() {
 	working = false;
-	worker.join();
+	if(worker.joinable()) worker.join();
 }
 
 void OneElevatorManager::CallElevator(std::unique_ptr<IPerson>&& person, Units::floor floorNumber) {
@@ -81,7 +80,7 @@ void OneElevatorManager::CallElevator(std::unique_ptr<IPerson>&& person, Units::
 std::unique_ptr<IPerson> OneElevatorManager::GetCustomer(Units::floor floor, Units::direction cabinDirection) {
 	return std::move(floors[floor]->GetCustomer(cabinDirection));
 }
-std::optional<const IPerson*> OneElevatorManager::PeekCustomer(Units::floor floor, Units::direction cabinDirection) const noexcept {
+std::optional<const IPerson*> OneElevatorManager::PeekCustomer(Units::floor floor, Units::direction cabinDirection) const {
 	return floors[floor]->PeekCustomer(cabinDirection);
 }
 
@@ -108,7 +107,7 @@ void OneElevatorManager::Update() {
 
 		cabin->Update(timePoint);
 	}
-	std::clog << "Simulation Ended";
+	ObjectFactory::PrintMessage("SystemMenager", "Simulation Ended.");
 }
 
 void OneElevatorManager::GenerateNewCustomer(Time::timePoint timePoint) {
@@ -117,6 +116,6 @@ void OneElevatorManager::GenerateNewCustomer(Time::timePoint timePoint) {
 	CallElevator(std::move(customer), floor);
 
 	// must multiply by 100 because intervalDistribution returns distribution in seconds
-	Time::deltaTime interval = Time::deltaTime((long)(intervalDirstibution(randomEngine) * 1000));
+	Time::deltaTime interval = std::chrono::milliseconds((long)(intervalDirstibution(randomEngine) * 1000));
 	nextCustomerArrivalTimePoint = Time::clock::now() + interval;
 }

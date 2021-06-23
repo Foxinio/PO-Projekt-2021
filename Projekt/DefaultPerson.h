@@ -6,6 +6,8 @@ class DefaultPerson :
 	Units::weight weight;
 	Units::floor targerFloor;
 	Units::floor startingFloor;
+	std::uint32_t tag;
+
 public:
 	DefaultPerson();
 	DefaultPerson(Units::weight weight, Units::floor startingFloor, Units::floor targetFloor);

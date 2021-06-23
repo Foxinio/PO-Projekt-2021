@@ -21,6 +21,8 @@ protected:
 
 	virtual void UpdatePosition(Time::deltaTime deltaTime) final;
 	virtual bool HasArrivedAtDestination() final;
+	virtual double GetVelocity() final;
+	virtual double GetPosition() final;
 	
 	virtual void ArrivedAtFloor() = 0;
 public:

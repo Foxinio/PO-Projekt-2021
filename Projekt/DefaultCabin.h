@@ -20,6 +20,8 @@ class DefaultCabin :
 
 	Time::timePoint lastUpdateTimePoint;
 
+	Time::timePoint lastLogUpdate;
+	std::uint32_t tag;
 
 public:
 	DefaultCabin(std::shared_ptr<IElevatorManager> systemManager, Units::floor startingFloor = 0);

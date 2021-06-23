@@ -5,7 +5,6 @@
 DefaultFloor::DefaultFloor() : queue() { }
 
 void DefaultFloor::JoinQueue(std::unique_ptr<IPerson>&& person) {
-	std::clog << "[Floor] New Customer Joins Queue\n";
 	queue.push(std::move(person));
 }
 

@@ -1,6 +1,14 @@
 #include "IPhysicalCabin.h"
 #include "ObjectFactory.h"
 
+double IPhysicalCabin::GetPosition() {
+	return position;
+}
+
+double IPhysicalCabin::GetVelocity() {
+	return velocity;
+}
+
 void IPhysicalCabin::UpdatePosition(Time::deltaTime deltaTime) {
 	acceleration = GetAcceleration();
 	// After cast time is in seconds

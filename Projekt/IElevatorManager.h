@@ -25,7 +25,7 @@ class IElevatorManager : public IElevatorFacade
 
 
 		virtual std::unique_ptr<IPerson> GetCustomer(Units::floor floor, Units::direction cabinDirection) = 0;
-		virtual std::optional<const IPerson*> PeekCustomer(Units::floor floor, Units::direction cabinDirection) const noexcept = 0;
+		virtual std::optional<const IPerson*> PeekCustomer(Units::floor floor, Units::direction cabinDirection) const = 0;
 
 
 		// events

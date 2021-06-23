@@ -21,9 +21,17 @@ public:
 	static const double maxAcceleration;
 	static const double maxVelocity;
 
+	static Time::deltaTime cabinUpdateFrequency;
+
+	static std::uint32_t CabinCapacity;
+
 	static Time::deltaTime GetSimulationTime();
 
 	static std::string TimeToString(Time::deltaTime time);
+
+	static void PrintMessage(std::string sender, std::string message);
+
+	static std::string TagToString(std::uint32_t tag, std::uint32_t fill = 4);
 
 	// Get implementation of ICabin using default constructor
 	static std::unique_ptr<ICabin> GetCabin(std::shared_ptr<IElevatorManager> systemManagerReference);
@@ -32,11 +40,15 @@ public:
 	static std::unique_ptr<ICabin> GetCabin(std::shared_ptr<IElevatorManager> systemManagerReference,
 														 Units::floor startingFloor);
 
+	static std::uint32_t GetCabinTag();
+
 	// Get implementation of IPerson using default constructor
 	static std::unique_ptr<IPerson> GetPerson();
 
 	// Get implementation of IPerson with given parameters
 	static std::unique_ptr<IPerson> GetPerson(Units::weight weight, Units::floor startingFloor, Units::floor targetFloor);
+
+	static std::uint32_t GetPersonTag();
 
 	// Get implementation of IPeopleGenerator with floor range
 	static std::unique_ptr<IPeopleGenerator> GetPeopleGenerator(std::pair<Units::floor, Units::floor> floorRange);
