@@ -144,6 +144,7 @@
     <ClCompile Include="DefaultFloor.cpp" />
     <ClCompile Include="DefaultPerson.cpp" />
     <ClCompile Include="DefaultPeopleGenerator.cpp" />
+    <ClCompile Include="FloorQueue.cpp" />
     <ClCompile Include="IPhysicalCabin.cpp" />
     <ClCompile Include="ObjectFactory.cpp" />
     <ClCompile Include="OneElevatorManager.cpp" />
@@ -155,6 +156,7 @@
     <ClInclude Include="DefaultFloor.h" />
     <ClInclude Include="DefaultPerson.h" />
     <ClInclude Include="DefaultPeopleGenerator.h" />
+    <ClInclude Include="FloorQueue.h" />
     <ClInclude Include="ICabin.h" />
     <ClInclude Include="IPerson.h" />
     <ClInclude Include="IElevatorManager.h" />
@@ -167,6 +169,7 @@
   <ItemGroup>
     <None Include="ClassDiagram.cd" />
     <None Include="ClassDiagram1.cd" />
+    <None Include="ClassDiagram2.cd" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

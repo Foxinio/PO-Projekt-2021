@@ -6,14 +6,15 @@
 
 #include "IPhysicalCabin.h"
 #include "ObjectFactory.h"
+#include "FloorQueue.h"
 
 class DefaultCabin :
 	public IPhysicalCabin
 {
 	Units::weight onBoardWeight = 0;
 	std::list<std::unique_ptr<IPerson>> passangers;
-	
-	std::priority_queue<Units::floor> destinationQueue;
+
+	FloorQueue destinationQueue;
 	std::mutex destinationQueueMutex;
 
 	std::shared_ptr<IElevatorManager> systemManager;
@@ -21,10 +22,11 @@ class DefaultCabin :
 	Time::timePoint lastUpdateTimePoint;
 
 	Time::timePoint lastLogUpdate;
-	std::uint32_t tag;
+	Tag tag;
 
 public:
-	DefaultCabin(std::shared_ptr<IElevatorManager> systemManager, Units::floor startingFloor = 0);
+	DefaultCabin(std::shared_ptr<IElevatorManager> systemManager, Units::floor startingFloor);
+	DefaultCabin(std::shared_ptr<IElevatorManager> systemManager);
 
 	virtual void Update(Time::timePoint time) override;
 

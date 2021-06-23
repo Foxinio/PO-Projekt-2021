@@ -27,6 +27,9 @@ namespace Units {
 
 	enum class direction {
 		Up,
-		Down
+		Down,
+		NoDir
 	};
 }
+
+using Tag = std::uint32_t;

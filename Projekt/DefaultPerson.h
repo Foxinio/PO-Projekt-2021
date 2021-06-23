@@ -1,12 +1,15 @@
 #pragma once
+
 #include "IPerson.h"
+
+
 class DefaultPerson :
     public IPerson
 {
 	Units::weight weight;
 	Units::floor targerFloor;
 	Units::floor startingFloor;
-	std::uint32_t tag;
+	Tag tag;
 
 public:
 	DefaultPerson();
@@ -18,7 +21,7 @@ public:
 
 	virtual bool DoesEnter(Units::direction direction) const;
 
-	virtual void LeaveCabin() override;
-	virtual void EnterCabin() override;
+	virtual void LeaveCabin(Tag cabinTag) override;
+	virtual void EnterCabin(Tag cabinTag) override;
 };
 

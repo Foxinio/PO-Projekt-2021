@@ -22,7 +22,10 @@ class IElevatorManager : public IElevatorFacade
 
 		virtual void Start() = 0;
 		virtual void Stop() = 0;
+		virtual void WaitForStop() = 0;
 
+		virtual void DisablePeopleGeneration() = 0;
+		virtual void EnablePeopleGeneration() = 0;
 
 		virtual std::unique_ptr<IPerson> GetCustomer(Units::floor floor, Units::direction cabinDirection) = 0;
 		virtual std::optional<const IPerson*> PeekCustomer(Units::floor floor, Units::direction cabinDirection) const = 0;

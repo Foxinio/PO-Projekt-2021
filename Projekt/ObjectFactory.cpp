@@ -15,14 +15,14 @@ std::uint64_t ObjectFactory::seed = 0;
 
 const double Double::accuracy = 1.0e-8;
 
-const Units::weight ObjectFactory::maxWeight = 1600;
-
-const double ObjectFactory::maxAcceleration = 2.0;
-const double ObjectFactory::maxVelocity = 4;
-
-Time::deltaTime ObjectFactory::cabinUpdateFrequency = std::chrono::milliseconds(2000);
-
+Units::weight ObjectFactory::maxWeight = 1600;
 std::uint32_t ObjectFactory::CabinCapacity = 8;
+
+double ObjectFactory::maxAcceleration = 2.0;
+double ObjectFactory::maxVelocity = 4;
+
+Time::deltaTime ObjectFactory::cabinUpdateFrequency = std::chrono::seconds(5);
+
 
 Time::deltaTime ObjectFactory::GetSimulationTime() {
 	static Time::timePoint beginTime = Time::clock::now();
@@ -108,7 +108,7 @@ std::unique_ptr<IFloor> ObjectFactory::GetFloor() {
 }
 
 // Get implementation of IElevatorManager using default constructor
-std::shared_ptr<IElevatorManager> ObjectFactory::GetElevatorManager(std::size_t numberOfFloors, std::pair<int,int> normalDustributionIntervalParams) {
+std::shared_ptr<IElevatorManager> ObjectFactory::GetElevatorManager(std::size_t numberOfFloors, std::pair<int,int> normalDustributionIntervalParams, Units::floor startingFloor) {
 	//std::shared_ptr<OneElevatorManager> result = std::make_shared<OneElevatorManager>();
 	
 	//auto cabin = GetCabin(result);
@@ -125,7 +125,8 @@ std::shared_ptr<IElevatorManager> ObjectFactory::GetElevatorManager(std::size_t 
 	return std::make_shared<OneElevatorManager>(//std::move(cabin),
 															  std::move(floors),
 															  std::move(generator),
-															  normalDustributionIntervalParams);
+															  normalDustributionIntervalParams,
+															  startingFloor);
 }
 
 

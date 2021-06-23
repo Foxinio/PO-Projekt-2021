@@ -1,6 +1,11 @@
 #include "IPhysicalCabin.h"
 #include "ObjectFactory.h"
 
+IPhysicalCabin::IPhysicalCabin(Units::floor startingFloor) :
+	position(startingFloor),
+	velocity(0),
+	acceleration(0) { }
+
 double IPhysicalCabin::GetPosition() {
 	return position;
 }
@@ -25,21 +30,33 @@ bool IPhysicalCabin::HasArrivedAtDestination() {
 }
 
 Units::direction IPhysicalCabin::GetDirection() {
-	double abs = (double)GetCurrentTargetFloor().value() - position;
-	if (abs < 0) {
-		return Units::direction::Down;
+	if (auto dir = GetCurrentTargetFloor(); dir) {
+		double abs = (double)dir.value() - position;
+		if (abs < 0) {
+			return Units::direction::Down;
+		}
+		else {
+			return Units::direction::Up;
+		}
 	}
 	else {
-		return Units::direction::Up;
+		return Units::direction::NoDir;
 	}
 }
 
+double IPhysicalCabin::GetMinimalDistance() {
+	return (std::signbit(velocity) ? -1 : 1) * velocity * velocity / ObjectFactory::maxAcceleration;
+}
+
 double IPhysicalCabin::GetAcceleration() {
-	double atLeastDistance = velocity * velocity / ObjectFactory::maxAcceleration;
-	if(GetDirection() == Units::direction::Up) {
+	double atLeastDistance = GetMinimalDistance();
+	if (GetDirection() == Units::direction::Up) {
 		return ObjectFactory::maxAcceleration * (this->position + atLeastDistance >= GetCurrentTargetFloor() ? -1 : 1);
 	}
+	else if (GetDirection() == Units::direction::Down) {
+		return ObjectFactory::maxAcceleration * (this->position + atLeastDistance <= GetCurrentTargetFloor() ? 1 : -1);
+	}
 	else {
-		return ObjectFactory::maxAcceleration * (this->position - atLeastDistance <= GetCurrentTargetFloor() ? 1 : -1);
+		return 0.0;
 	}
 }

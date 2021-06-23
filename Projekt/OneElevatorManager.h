@@ -19,6 +19,7 @@ class OneElevatorManager :
 	std::thread worker;
 	bool working;
 
+	bool generatePeople;
 	std::mt19937_64 randomEngine;
 	std::normal_distribution<double> intervalDirstibution;
 	Time::timePoint nextCustomerArrivalTimePoint;
@@ -27,10 +28,10 @@ public:
 
 	OneElevatorManager();
 
-	OneElevatorManager(//std::unique_ptr<ICabin>&& cabin, 
-							 std::vector<std::unique_ptr<IFloor>>&& floorVector,
+	OneElevatorManager(std::vector<std::unique_ptr<IFloor>>&& floorVector,
 							 std::unique_ptr<IPeopleGenerator>&& customerGenerator,
-							 std::pair<int,int> normalDistributionIntervalParams);
+							 std::pair<int,int> normalDistributionIntervalParams,
+							 Units::floor startingFloor);
 
 	OneElevatorManager(const OneElevatorManager& arg) = delete;
 	OneElevatorManager(OneElevatorManager&& arg) = default;
@@ -42,6 +43,10 @@ public:
 
 	virtual void Start();
 	virtual void Stop();
+	virtual void WaitForStop();
+
+	virtual void DisablePeopleGeneration();
+	virtual void EnablePeopleGeneration();
 
 	virtual void CallElevator(std::unique_ptr<IPerson>&& person, Units::floor floorNumber);
 

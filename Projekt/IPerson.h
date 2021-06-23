@@ -11,7 +11,7 @@ public:
 
 	virtual bool DoesEnter(Units::direction direction) const = 0;
 
-	virtual void LeaveCabin() = 0;
-	virtual void EnterCabin() = 0;
+	virtual void LeaveCabin(Tag cabinTag) = 0;
+	virtual void EnterCabin(Tag cabinTag) = 0;
 };
 

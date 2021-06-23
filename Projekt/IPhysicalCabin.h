@@ -16,6 +16,7 @@ private:
 
 protected:
 
+	IPhysicalCabin(Units::floor startingFloor = 0);
 
 	virtual std::optional<Units::floor> GetCurrentTargetFloor() = 0;
 
@@ -23,6 +24,7 @@ protected:
 	virtual bool HasArrivedAtDestination() final;
 	virtual double GetVelocity() final;
 	virtual double GetPosition() final;
+	virtual double GetMinimalDistance() final;
 	
 	virtual void ArrivedAtFloor() = 0;
 public:

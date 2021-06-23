@@ -39,16 +39,16 @@ bool DefaultPerson::DoesEnter(Units::direction direction) const {
 	return true;
 }
 
-void DefaultPerson::LeaveCabin() {
+void DefaultPerson::LeaveCabin(Tag cabinTag) {
 	using namespace std::chrono_literals;
 	using namespace std::string_literals;
-	ObjectFactory::PrintMessage("Person#"s + ObjectFactory::TagToString(tag), "Leaving cabin on floor "s + std::to_string(targerFloor));
+	ObjectFactory::PrintMessage("Person#"s + ObjectFactory::TagToString(tag), "Leaving Cabin#" + ObjectFactory::TagToString(cabinTag) + " on floor "s + std::to_string(targerFloor));
 	std::this_thread::sleep_for(500ms);
 }
 
-void DefaultPerson::EnterCabin() {
+void DefaultPerson::EnterCabin(Tag cabinTag) {
 	using namespace std::chrono_literals;
 	using namespace std::string_literals;
-	ObjectFactory::PrintMessage("Person#"s + ObjectFactory::TagToString(tag), "Entering cabin on floor "s + std::to_string(startingFloor));
+	ObjectFactory::PrintMessage("Person#"s + ObjectFactory::TagToString(tag), "Entering Cabin#" + ObjectFactory::TagToString(cabinTag) + " on floor "s + std::to_string(startingFloor));
 	std::this_thread::sleep_for(500ms);
 }

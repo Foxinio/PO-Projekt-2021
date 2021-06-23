@@ -16,14 +16,13 @@ public:
 
 	static std::uint64_t seed;
 
-	static const Units::weight maxWeight;
+	static Units::weight maxWeight;
+	static std::uint32_t CabinCapacity;
 
-	static const double maxAcceleration;
-	static const double maxVelocity;
+	static double maxAcceleration;
+	static double maxVelocity;
 
 	static Time::deltaTime cabinUpdateFrequency;
-
-	static std::uint32_t CabinCapacity;
 
 	static Time::deltaTime GetSimulationTime();
 
@@ -62,7 +61,8 @@ public:
 
 	// Get implementation of IElevatorManager using default constructor
 	static std::shared_ptr<IElevatorManager> GetElevatorManager(std::size_t numberOfFloors,
-																					std::pair<int, int> normalDustributionIntervalParams);
+																					std::pair<int, int> normalDustributionIntervalParams,
+																					Units::floor startingFloor);
 };
 
 

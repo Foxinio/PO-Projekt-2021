@@ -10,7 +10,7 @@ int main()
 	// gkt init here
 
 	// begin simulation
-	auto manager = ObjectFactory::GetElevatorManager(4, { 10, 5 });
+	auto manager = ObjectFactory::GetElevatorManager(8, { 10, 5 }, 4);
 	manager->Start();
 	
 
@@ -19,5 +19,6 @@ int main()
 	std::this_thread::sleep_for(1min);
 
 	// stop simulation
-	manager->Stop();
+	manager->DisablePeopleGeneration();
+	manager->WaitForStop();
 }

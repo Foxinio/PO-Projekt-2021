@@ -6,62 +6,36 @@
 
 
 OneElevatorManager::OneElevatorManager() : 
-		cabin(nullptr), 
-		floors(), 
-		customerGenerator(nullptr),
-		intervalDirstibution(),
-		nextCustomerArrivalTimePoint(Time::clock::now()),
-		randomEngine(ObjectFactory::seed),
-		worker(),
-		working(false) { }
+		OneElevatorManager(std::vector<std::unique_ptr<IFloor>>(), nullptr, { 0,0 }, 0) { 
+	cabin = nullptr;
+}
 
 OneElevatorManager::OneElevatorManager(std::vector<std::unique_ptr<IFloor>>&& floorVector,
 													std::unique_ptr<IPeopleGenerator>&& customerGenerator,
-													std::pair<int, int> normalDistributionIntervalParams) :
-		cabin(ObjectFactory::GetCabin(std::shared_ptr<OneElevatorManager>(this))),
+													std::pair<int, int> normalDistributionIntervalParams,
+													Units::floor startingFloor) :
+		cabin(ObjectFactory::GetCabin(std::shared_ptr<OneElevatorManager>(this), startingFloor)),
 		floors(),
 		customerGenerator(std::move(customerGenerator)),
 		intervalDirstibution((double)normalDistributionIntervalParams.first, (double)normalDistributionIntervalParams.second),
 		nextCustomerArrivalTimePoint(Time::clock::now()),
 		randomEngine(ObjectFactory::seed),
 		worker(),
-		working(false) {
+		working(false),
+		generatePeople(true) {
 	std::move(std::begin(floorVector), std::end(floorVector), std::back_inserter(floors));
 }
 
-//
-//OneElevatorManager::OneElevatorManager(OneElevatorManager&& arg) :
-//		cabin(std::move(arg.cabin)),
-//		floors(std::move(arg.floors)),
-//		customerGenerator(std::move(arg.customerGenerator)),
-//		intervalDirstibution(std::move(arg.intervalDirstibution)),
-//		nextCustomerArrivalTimePoint(std::chrono::time_point_cast<Time::timePoint::duration>(clock::now())),
-//		randomEngine(std::move(arg.randomEngine)),
-//		worker(std::move(arg.worker)),
-//		working(arg.working) { }
-//
-//
-//OneElevatorManager& OneElevatorManager::operator=(OneElevatorManager&& arg) {
-//	cabin = std::move(arg.cabin);
-//	floors = std::move(arg.floors);
-//	customerGenerator = std::move(arg.customerGenerator);
-//	intervalDirstibution = std::move(arg.intervalDirstibution);
-//	nextCustomerArrivalTimePoint = std::chrono::time_point_cast<Time::timePoint::duration>(clock::now());
-//	randomEngine = std::move(std::mt19937_64(ObjectFactory::seed));
-//	worker = std::move(arg.worker);
-//	working = arg.working;
-//
-//	arg.working = false;
-//}
-
 OneElevatorManager::~OneElevatorManager() {
-	Stop();
+	working = false;
+	if (worker.joinable()) worker.join();
 }
 
 void OneElevatorManager::Start() {
 	assert(cabin != nullptr);
 	assert(customerGenerator != nullptr);
 	working = true;
+	ObjectFactory::PrintMessage("SystemMenager", "Simulation started.");
 	worker = std::thread{ [this]() {
 			Update();
 		} 
@@ -69,7 +43,20 @@ void OneElevatorManager::Start() {
 }
 void OneElevatorManager::Stop() {
 	working = false;
+	ObjectFactory::PrintMessage("SystemMenager", "Simulation force stopped.");
 	if(worker.joinable()) worker.join();
+}
+void OneElevatorManager::WaitForStop() {
+	if(worker.joinable()) worker.join();
+}
+
+void OneElevatorManager::DisablePeopleGeneration() {
+	generatePeople = false;
+	ObjectFactory::PrintMessage("SystemMenager", "People generation disabled.");
+}
+void OneElevatorManager::EnablePeopleGeneration() {
+	ObjectFactory::PrintMessage("SystemMenager", "People generation enabled.");
+	generatePeople = true;
 }
 
 void OneElevatorManager::CallElevator(std::unique_ptr<IPerson>&& person, Units::floor floorNumber) {
@@ -87,6 +74,8 @@ std::optional<const IPerson*> OneElevatorManager::PeekCustomer(Units::floor floo
 
 // events
 void OneElevatorManager::ElevatorWithoutOrders(const ICabin& caller) {
+	ObjectFactory::PrintMessage("SystemMenager", "Elevator without orders. Stoping Simulation.");
+	working = false;
 	return;
 }
 void OneElevatorManager::ElevatorArrived(const ICabin& caller) {
@@ -101,7 +90,7 @@ void OneElevatorManager::Update() {
 	while (working) {
 		auto timePoint = Time::clock::now();
 
-		if (this->nextCustomerArrivalTimePoint < timePoint) {
+		if (generatePeople && this->nextCustomerArrivalTimePoint < timePoint) {
 			GenerateNewCustomer(timePoint);
 		}
 
@@ -115,7 +104,7 @@ void OneElevatorManager::GenerateNewCustomer(Time::timePoint timePoint) {
 	auto floor = customer->GetStartingFloor();
 	CallElevator(std::move(customer), floor);
 
-	// must multiply by 100 because intervalDistribution returns distribution in seconds
+	// must multiply by 1000 because intervalDistribution returns distribution in seconds
 	Time::deltaTime interval = std::chrono::milliseconds((long)(intervalDirstibution(randomEngine) * 1000));
 	nextCustomerArrivalTimePoint = Time::clock::now() + interval;
 }

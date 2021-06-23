@@ -1,0 +1,123 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="IPhysicalCabin" Collapsed="true">
+    <Position X="9.25" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAACAIACAAAAAAIAEAAAAABEQAAAQAAAQABAA=</HashCode>
+      <FileName>IPhysicalCabin.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ObjectFactory" Collapsed="true">
+    <Position X="15" Y="2.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ABIBAAAAABEwQIAAAAgAAAAAAAACYAAAABAAAAAgCAA=</HashCode>
+      <FileName>ObjectFactory.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Double" Collapsed="true">
+    <Position X="15" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAABAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>ObjectFactory.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ICabin" Collapsed="true">
+    <Position X="9.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAAAAIAAAAAAAAAAAABAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>ICabin.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="IPerson" Collapsed="true">
+    <Position X="3.5" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>IAEAAAAACAAgAAIAAAAAAAAAAAAAAAAAAAAAAAAACAA=</HashCode>
+      <FileName>IPerson.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="IElevatorFacade" Collapsed="true">
+    <Position X="0.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAA=</HashCode>
+      <FileName>IElevatorManager.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="IElevatorManager" Collapsed="true">
+    <Position X="0.5" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAABAAACAEAAAAAAAEAAAAAAAAAAAAIAAAAEABAAA=</HashCode>
+      <FileName>IElevatorManager.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="IFloor" Collapsed="true">
+    <Position X="11.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAFAAA=</HashCode>
+      <FileName>IFloor.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="IPeopleGenerator" Collapsed="true">
+    <Position X="0.5" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>IPeopleGenerator.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DefaultCabin" Collapsed="true">
+    <Position X="9.25" Y="3" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AASABCRAAAAACAYAgAAAAAEABACAjAAAAAAAAAAEAAA=</HashCode>
+      <FileName>DefaultCabin.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DefaultFloor">
+    <Position X="11.5" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>gAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAAAAEAFAAA=</HashCode>
+      <FileName>DefaultFloor.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DefaultPerson" Collapsed="true">
+    <Position X="3.5" Y="5.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>IAEAAGAACAAgAAIAAAAAAAAAAAAAAAAgAAQAAAAICAA=</HashCode>
+      <FileName>DefaultPerson.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DefaultPeopleGenerator" Collapsed="true">
+    <Position X="0.5" Y="5.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AABBAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAABAAAg=</HashCode>
+      <FileName>DefaultPeopleGenerator.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="OneElevatorManager" Collapsed="true">
+    <Position X="0.5" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AARAABIwACAUAAAAAAgMgAAAAAAAAAAAoAAgAEABCIA=</HashCode>
+      <FileName>OneElevatorManager.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Time::clock" Collapsed="true">
+    <Position X="15" Y="1.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Constants.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Struct Name="HackedQueue&lt;T, S, C&gt;" Collapsed="true">
+    <Position X="15" Y="3" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>DefaultCabin.cpp</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Enum Name="Units::direction" Collapsed="true">
+    <Position X="15" Y="4" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAI=</HashCode>
+      <FileName>Constants.h</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>
