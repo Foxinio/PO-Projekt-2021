@@ -35,7 +35,7 @@ void OneElevatorManager::Start() {
 	assert(cabin != nullptr);
 	assert(customerGenerator != nullptr);
 	working = true;
-	ObjectFactory::PrintMessage("SystemMenager", "Simulation started.");
+	ObjectFactory::PrintMessage("SystemManager", "Simulation started.");
 	worker = std::thread{ [this]() {
 			Update();
 		} 
@@ -43,7 +43,7 @@ void OneElevatorManager::Start() {
 }
 void OneElevatorManager::Stop() {
 	working = false;
-	ObjectFactory::PrintMessage("SystemMenager", "Simulation force stopped.");
+	ObjectFactory::PrintMessage("SystemManager", "Simulation force stopped.");
 	if(worker.joinable()) worker.join();
 }
 void OneElevatorManager::WaitForStop() {
@@ -52,10 +52,10 @@ void OneElevatorManager::WaitForStop() {
 
 void OneElevatorManager::DisablePeopleGeneration() {
 	generatePeople = false;
-	ObjectFactory::PrintMessage("SystemMenager", "People generation disabled.");
+	ObjectFactory::PrintMessage("SystemManager", "People generation disabled.");
 }
 void OneElevatorManager::EnablePeopleGeneration() {
-	ObjectFactory::PrintMessage("SystemMenager", "People generation enabled.");
+	ObjectFactory::PrintMessage("SystemManager", "People generation enabled.");
 	generatePeople = true;
 }
 
@@ -74,7 +74,7 @@ std::optional<const IPerson*> OneElevatorManager::PeekCustomer(Units::floor floo
 
 // events
 void OneElevatorManager::ElevatorWithoutOrders(const ICabin& caller) {
-	ObjectFactory::PrintMessage("SystemMenager", "Elevator without orders. Stoping Simulation.");
+	ObjectFactory::PrintMessage("SystemManager", "Elevator without orders. Stoping Simulation.");
 	working = false;
 	return;
 }
@@ -96,7 +96,7 @@ void OneElevatorManager::Update() {
 
 		cabin->Update(timePoint);
 	}
-	ObjectFactory::PrintMessage("SystemMenager", "Simulation Ended.");
+	ObjectFactory::PrintMessage("SystemManager", "Simulation Ended.");
 }
 
 void OneElevatorManager::GenerateNewCustomer(Time::timePoint timePoint) {

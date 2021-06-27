@@ -14,8 +14,6 @@ class OneElevatorManager :
 	std::unique_ptr<IPeopleGenerator> customerGenerator;
    std::vector<std::unique_ptr<IFloor>> floors;
 
-
-
 	std::thread worker;
 	bool working;
 
@@ -52,7 +50,6 @@ public:
 
 	virtual std::unique_ptr<IPerson> GetCustomer(Units::floor floor, Units::direction cabinDirection);
 	virtual std::optional<const IPerson*> PeekCustomer(Units::floor floor, Units::direction cabinDirection) const;
-
 
 	// events
 	virtual void ElevatorWithoutOrders(const ICabin& caller);

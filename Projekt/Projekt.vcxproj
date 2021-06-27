@@ -146,6 +146,7 @@
     <ClCompile Include="DefaultPeopleGenerator.cpp" />
     <ClCompile Include="FloorQueue.cpp" />
     <ClCompile Include="IPhysicalCabin.cpp" />
+    <ClCompile Include="Makefile" />
     <ClCompile Include="ObjectFactory.cpp" />
     <ClCompile Include="OneElevatorManager.cpp" />
     <ClCompile Include="Projekt.cpp" />
@@ -170,6 +171,8 @@
     <None Include="ClassDiagram.cd" />
     <None Include="ClassDiagram1.cd" />
     <None Include="ClassDiagram2.cd" />
+    <None Include="ClassDiagram3.cd" />
+    <None Include="README.md" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

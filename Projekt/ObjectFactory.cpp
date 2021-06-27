@@ -47,7 +47,7 @@ std::string ObjectFactory::TagToString(std::uint32_t tag, std::uint32_t fill) {
 	return (std::stringstream() << std::setfill('0') << std::setw(fill) << tag).str();
 }
 
-std::mutex clogMutex{};
+static std::mutex clogMutex{};
 void ObjectFactory::PrintMessage(std::string sender, std::string message) {
 	using namespace std::string_literals;
 	std::string output = "["s + ObjectFactory::TimeToString(ObjectFactory::GetSimulationTime()) + "] " + sender + ": " + message + "\n";
@@ -65,8 +65,8 @@ std::unique_ptr<ICabin> ObjectFactory::GetCabin(std::shared_ptr<IElevatorManager
 	return std::make_unique<DefaultCabin>(systemManagerReference, startingFloor);
 }
 
-std::mutex cabinTagMutex{};
-std::uint32_t cabinTagCounter = 0;
+static std::mutex cabinTagMutex{};
+static std::uint32_t cabinTagCounter = 0;
 std::uint32_t ObjectFactory::GetCabinTag() {
 	std::unique_lock<std::mutex> lock{ cabinTagMutex};
 	return cabinTagCounter++;
@@ -84,8 +84,8 @@ std::unique_ptr<IPerson> ObjectFactory::GetPerson(Units::weight weight,
 	return std::make_unique<DefaultPerson>(weight, startingFloor, targetFloor);
 }
 
-std::mutex personTagMutex{};
-std::uint32_t personTagCounter = 0;
+static std::mutex personTagMutex{};
+static std::uint32_t personTagCounter = 0;
 std::uint32_t ObjectFactory::GetPersonTag() {
 	std::unique_lock<std::mutex> lock{ personTagMutex };
 	return personTagCounter++;
