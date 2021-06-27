@@ -44,7 +44,9 @@ std::string ObjectFactory::TimeToString(Time::deltaTime time) {
 }
 
 std::string ObjectFactory::TagToString(std::uint32_t tag, std::uint32_t fill) {
-	return (std::stringstream() << std::setfill('0') << std::setw(fill) << tag).str();
+	std::stringstream ss;
+	ss << std::setfill('0') << std::setw(fill) << tag;
+	return ss.str();
 }
 
 static std::mutex clogMutex{};
@@ -116,7 +118,7 @@ std::shared_ptr<IElevatorManager> ObjectFactory::GetElevatorManager(std::size_t 
 	std::vector<std::unique_ptr<IFloor>> floors;
 	//std::vector<std::unique_ptr<IFloor>> floors = { numberOfFloors, nullptr };
 	//std::generate(std::begin(floors), std::end(floors), [](){	return std::move(ObjectFactory::GetFloor()); });
-	for (int i = 0; i < numberOfFloors; ++i) {
+	for (std::uint32_t i = 0; i < numberOfFloors; ++i) {
 		floors.push_back(ObjectFactory::GetFloor());
 	}
 	auto generator = GetPeopleGenerator({ 0, numberOfFloors - 1 });

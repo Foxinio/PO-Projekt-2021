@@ -108,8 +108,10 @@ void DefaultCabin::Update(Time::timePoint time) {
 	if (lastLogUpdate + ObjectFactory::cabinUpdateFrequency < Time::clock::now()) {
 		using namespace std::string_literals;
 		using namespace std::chrono_literals;
-		auto message = (std::stringstream() << "Update: position " << std::setprecision(3) << std::fixed << GetPosition()
-			<< "floor, velocity " << GetVelocity() << "floors/s").str();
+		std::stringstream ss;
+		ss << "Update: position " << std::setprecision(3) << std::fixed << GetPosition()
+			<< "floor, velocity " << GetVelocity() << "floors/s";
+		auto message = ss.str();
 
 		if (auto target = GetCurrentTargetFloor(); target) {
 			message += ", target "s + std::to_string(target.value()) + ".";

@@ -1,6 +1,6 @@
-CC = g++
+CXX = g++
 
-CFLAGS = -O2 -Wall -std=c++17
+CXXFLAGS = -O2 -Wall -std=c++17
 
 TARGET = Projekt
 
@@ -9,35 +9,24 @@ all: $(TARGET)
 
 $(TARGET): $(TARGET).o ObjectFactory.o OneElevatorManager.o IPhysicalCabin.o DefaultCabin.o \
 		DefaultPerson.o DefaultPeopleGenerator.o DefaultFloor.o FloorQueue.o
-	$(CC) $(CFLAGS) -o $(TARGET) $(TARGET).o ObjectFactory.o OneElevatorManager.o IPhysicalCabin.o \
-	DefaultCabin.o DefaultPerson.o DefaultPeopleGenerator.o DefaultFloor.o FloorQueue.o
 
 $(TARGET).o: $(TARGET).cpp ObjectFactory.h IElevatorManager.h
-	$(CC) $(CFLAGS) -o $(TARGET).o $(TARGET).cpp
 
 ObjectFactory.o: ObjectFactory.cpp ObjectFactory.h DefaultCabin.h DefaultFloor.h DefaultPeopleGenerator.h DefaultPerson.h OneElevatorManager.h
-	$(CC) $(CFLAGS) -o ObjectFactory.o ObjectFactory.cpp
 
 OneElevatorManager.o: OneElevatorManager.cpp OneElevatorManager.h 
-	$(CC) $(CFLAGS) -o OneElevatorManager.o OneElevatorManager.cpp
 
 IPhysicalCabin.o: IPhysicalCabin.cpp IPhysicalCabin.h ObjectFactory.h
-	$(CC) $(CFLAGS) -o IPhysicalCabin.o IPhysicalCabin.cpp
 
 DefaultCabin.o: DefaultCabin.cpp DefaultCabin.h ObjectFactory.h
-	$(CC) $(CFLAGS) -o DefaultCabin.o DefaultCabin.cpp
 
 DefaultPerson.o: DefaultPerson.cpp DefaultPerson.h ObjectFactory.h
-	$(CC) $(CFLAGS) -o DefaultPerson.o DefaultPerson.cpp
 
 DefaultPeopleGenerator.o: DefaultPeopleGenerator.cpp DefaultPeopleGenerator.h ObjectFactory.h
-	$(CC) $(CFLAGS) -o DefaultPeopleGenerator.o DefaultPeopleGenerator.cpp
 
 DefaultFloor.o: DefaultFloor.cpp DefaultFloor.h
-	$(CC) $(CFLAGS) -o DefaultFloor.o DefaultFloor.cpp
 
 FloorQueue.o: FloorQueue.cpp FloorQueue.h
-	$(CC) $(CFLAGS) -o FloorQueue.o FloorQueue.cpp
 
 clean:
 	rm -rf $(TARGET) *.o
