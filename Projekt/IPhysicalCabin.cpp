@@ -45,7 +45,7 @@ Units::direction IPhysicalCabin::GetDirection() {
 }
 
 double IPhysicalCabin::GetMinimalDistance() {
-	return (std::signbit(velocity) ? -1 : 1) * velocity * velocity / ObjectFactory::maxAcceleration;
+	return (velocity < 0 ? -1 : 1) * velocity * velocity / ObjectFactory::maxAcceleration;
 }
 
 double IPhysicalCabin::GetAcceleration() {
