@@ -1,11 +1,16 @@
 CXX = g++
 
-CXXFLAGS = -O2 -Wall -std=c++17
+OFLAGS = -O2
+STD = -std=c++17
+WFLAGS = -Wall
+CXXFLAGS = $(OFLAGS) -pthread $(STD)
 
 TARGET = Projekt
 
 all: $(TARGET)
 
+compile: $(TARGET).o ObjectFactory.o OneElevatorManager.o IPhysicalCabin.o DefaultCabin.o \
+		DefaultPerson.o DefaultPeopleGenerator.o DefaultFloor.o FloorQueue.o
 
 $(TARGET): $(TARGET).o ObjectFactory.o OneElevatorManager.o IPhysicalCabin.o DefaultCabin.o \
 		DefaultPerson.o DefaultPeopleGenerator.o DefaultFloor.o FloorQueue.o
@@ -29,7 +34,4 @@ DefaultFloor.o: DefaultFloor.cpp DefaultFloor.h
 FloorQueue.o: FloorQueue.cpp FloorQueue.h
 
 clean:
-	rm -rf $(TARGET) *.o
-
-
-
+	rm -rf $(TARGET) *.o *.out

@@ -52,7 +52,7 @@ std::string ObjectFactory::TagToString(std::uint32_t tag, std::uint32_t fill) {
 static std::mutex clogMutex{};
 void ObjectFactory::PrintMessage(std::string sender, std::string message) {
 	using namespace std::string_literals;
-	std::string output = "["s + ObjectFactory::TimeToString(ObjectFactory::GetSimulationTime()) + "] " + sender + ": " + message + "\n";
+	std::string output = "["s + ObjectFactory::TimeToString(ObjectFactory::GetSimulationTime()) + "] " + sender + ":\t" + message + "\n";
 	std::unique_lock<std::mutex> lock{ clogMutex };
 	std::clog << output;
 }
