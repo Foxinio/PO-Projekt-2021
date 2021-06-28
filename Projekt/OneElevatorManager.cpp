@@ -90,7 +90,7 @@ void OneElevatorManager::Update() {
 	while (working) {
 		auto timePoint = Time::clock::now();
 
-		if (generatePeople && this->nextCustomerArrivalTimePoint < timePoint) {
+		if (generatePeople && this->nextCustomerArrivalTimePoint <= timePoint) {
 			GenerateNewCustomer(timePoint);
 		}
 
