@@ -15,11 +15,12 @@ class OneElevatorManager :
    std::vector<std::unique_ptr<IFloor>> floors;
 
 	std::thread worker;
-	bool working;
 
 	std::mt19937_64 randomEngine;
 	std::normal_distribution<double> intervalDirstibution;
+
 	Time::timePoint nextCustomerArrivalTimePoint;
+	bool working;
 	bool generatePeople;
 
 public:

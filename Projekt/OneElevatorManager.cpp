@@ -17,9 +17,9 @@ OneElevatorManager::OneElevatorManager(std::vector<std::unique_ptr<IFloor>>&& fl
 		cabin(ObjectFactory::GetCabin(std::shared_ptr<OneElevatorManager>(this), startingFloor)),
 		customerGenerator(std::move(customerGenerator)),
 		floors(),
-		intervalDirstibution((double)normalDistributionIntervalParams.first, (double)normalDistributionIntervalParams.second),
 		worker(),
 		randomEngine(ObjectFactory::seed),
+		intervalDirstibution((double)normalDistributionIntervalParams.first, (double)normalDistributionIntervalParams.second),
 		nextCustomerArrivalTimePoint(Time::clock::now()),
 		working(false),
 		generatePeople(true) {

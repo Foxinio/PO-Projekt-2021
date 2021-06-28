@@ -4,8 +4,8 @@
 
 DefaultPeopleGenerator::DefaultPeopleGenerator(std::pair<Units::weight, Units::weight> weightRange,
 															  std::pair<Units::floor, Units::floor> floors) : 
-		weightDistribution(weightRange.first, weightRange.second),
 		randomEngine((std::uint32_t)ObjectFactory::seed),
+		weightDistribution(weightRange.first, weightRange.second),
 		floorDistribution(floors.first, floors.second) {	}
 
 DefaultPeopleGenerator::DefaultPeopleGenerator(std::pair<Units::floor, Units::floor> floors) :

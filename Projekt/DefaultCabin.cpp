@@ -15,13 +15,13 @@ std::optional<Units::floor> DefaultCabin::GetCurrentTargetFloor() {
 
 DefaultCabin::DefaultCabin(std::shared_ptr<IElevatorManager> systemManager, Units::floor startingFloor) :
 		IPhysicalCabin(startingFloor),
-		onBoardWeight(0),
 		passangers(),
 		destinationQueue([&](Units::floor lhs, Units::floor rhs) {	return priority_queueLess(lhs, rhs); }),
 		destinationQueueMutex(),
 		systemManager(systemManager),
 		lastUpdateTimePoint(Time::clock::now()),
 		lastLogUpdate(Time::clock::now()),
+		onBoardWeight(0),
 		tag(ObjectFactory::GetCabinTag()) { }
 
 DefaultCabin::DefaultCabin(std::shared_ptr<IElevatorManager> systemManager) :

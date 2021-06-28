@@ -11,7 +11,6 @@
 class DefaultCabin :
 	public IPhysicalCabin
 {
-	Units::weight onBoardWeight = 0;
 	std::list<std::unique_ptr<IPerson>> passangers;
 
 	FloorQueue destinationQueue;
@@ -22,6 +21,7 @@ class DefaultCabin :
 	Time::timePoint lastUpdateTimePoint;
 
 	Time::timePoint lastLogUpdate;
+	Units::weight onBoardWeight = 0;
 	Tag tag;
 
 public:
