@@ -15,6 +15,8 @@ public:
 	DefaultPerson();
 	DefaultPerson(Units::weight weight, Units::floor startingFloor, Units::floor targetFloor);
 
+	virtual ~DefaultPerson() = default;
+
 	virtual Units::weight GetWeight() const;
 	virtual Units::floor GetTarget() const;
 	virtual Units::floor GetStartingFloor() const;

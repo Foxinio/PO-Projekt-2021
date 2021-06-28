@@ -31,9 +31,9 @@ Time::deltaTime ObjectFactory::GetSimulationTime() {
 
 std::string ObjectFactory::TimeToString(Time::deltaTime time) {
 
-	std::uint32_t minutes = std::chrono::duration_cast<std::chrono::minutes>(time).count();
-	std::uint32_t seconds = std::chrono::duration_cast<std::chrono::seconds>(time).count() % 60;
-	std::uint32_t milliseconds = std::chrono::duration_cast<std::chrono::milliseconds>(time).count() % 1000;
+	std::uint32_t minutes = (std::uint32_t)std::chrono::duration_cast<std::chrono::minutes>(time).count();
+	std::uint32_t seconds = (std::uint32_t)std::chrono::duration_cast<std::chrono::seconds>(time).count() % 60;
+	std::uint32_t milliseconds = (std::uint32_t)std::chrono::duration_cast<std::chrono::milliseconds>(time).count() % 1000;
 
 	std::stringstream ss;
 	ss << std::setfill('0') << std::setw(2) << minutes;
@@ -111,21 +111,14 @@ std::unique_ptr<IFloor> ObjectFactory::GetFloor() {
 
 // Get implementation of IElevatorManager using default constructor
 std::shared_ptr<IElevatorManager> ObjectFactory::GetElevatorManager(std::size_t numberOfFloors, std::pair<int,int> normalDustributionIntervalParams, Units::floor startingFloor) {
-	//std::shared_ptr<OneElevatorManager> result = std::make_shared<OneElevatorManager>();
-	
-	//auto cabin = GetCabin(result);
-
 	std::vector<std::unique_ptr<IFloor>> floors;
-	//std::vector<std::unique_ptr<IFloor>> floors = { numberOfFloors, nullptr };
-	//std::generate(std::begin(floors), std::end(floors), [](){	return std::move(ObjectFactory::GetFloor()); });
 	for (std::uint32_t i = 0; i < numberOfFloors; ++i) {
 		floors.push_back(ObjectFactory::GetFloor());
 	}
 	auto generator = GetPeopleGenerator({ 0, numberOfFloors - 1 });
 
 
-	return std::make_shared<OneElevatorManager>(//std::move(cabin),
-															  std::move(floors),
+	return std::make_shared<OneElevatorManager>(std::move(floors),
 															  std::move(generator),
 															  normalDustributionIntervalParams,
 															  startingFloor);

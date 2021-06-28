@@ -36,7 +36,7 @@ Units::floor DefaultPerson::GetStartingFloor() const {
 }
 
 bool DefaultPerson::DoesEnter(Units::direction direction) const {
-	return true;
+	return direction == Units::direction::Up ? targerFloor > startingFloor : targerFloor < startingFloor;
 }
 
 void DefaultPerson::LeaveCabin(Tag cabinTag) {

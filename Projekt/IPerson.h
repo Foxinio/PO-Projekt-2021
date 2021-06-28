@@ -4,6 +4,7 @@
 
 class IPerson {
 public:
+	virtual ~IPerson() = default;
 
 	virtual Units::weight GetWeight() const = 0;
 	virtual Units::floor GetTarget() const = 0;

@@ -17,10 +17,10 @@ class OneElevatorManager :
 	std::thread worker;
 	bool working;
 
-	bool generatePeople;
 	std::mt19937_64 randomEngine;
 	std::normal_distribution<double> intervalDirstibution;
 	Time::timePoint nextCustomerArrivalTimePoint;
+	bool generatePeople;
 
 public:
 
@@ -37,7 +37,7 @@ public:
 	OneElevatorManager& operator=(const OneElevatorManager& arg) = delete;
 	OneElevatorManager& operator=(OneElevatorManager&& arg) = default;
 
-	~OneElevatorManager();
+	virtual ~OneElevatorManager();
 
 	virtual void Start();
 	virtual void Stop();

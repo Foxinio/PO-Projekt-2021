@@ -28,6 +28,8 @@ public:
 	DefaultCabin(std::shared_ptr<IElevatorManager> systemManager, Units::floor startingFloor);
 	DefaultCabin(std::shared_ptr<IElevatorManager> systemManager);
 
+	virtual ~DefaultCabin() = default;
+
 	virtual void Update(Time::timePoint time) override;
 
 	virtual void CallCabin(Units::floor floor) override;

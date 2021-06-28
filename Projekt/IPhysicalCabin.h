@@ -30,7 +30,7 @@ protected:
 public:
 	virtual Units::direction GetDirection();
 
-private:
+	virtual ~IPhysicalCabin() = default;
 
 };
 

@@ -6,6 +6,7 @@
 
 class ICabin {
 public:
+	virtual ~ICabin() = default;
 
 	virtual void Update(Time::timePoint time) = 0;
 

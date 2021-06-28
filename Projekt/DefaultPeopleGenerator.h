@@ -16,6 +16,8 @@ public:
 	DefaultPeopleGenerator(std::pair<Units::floor, Units::floor> floors,
 								  std::pair<Units::weight, Units::weight> weightRange);
 
+	virtual ~DefaultPeopleGenerator() = default;
+
 	virtual std::unique_ptr<IPerson> GeneratePerson();
 };
 

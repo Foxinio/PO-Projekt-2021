@@ -15,12 +15,12 @@ OneElevatorManager::OneElevatorManager(std::vector<std::unique_ptr<IFloor>>&& fl
 													std::pair<int, int> normalDistributionIntervalParams,
 													Units::floor startingFloor) :
 		cabin(ObjectFactory::GetCabin(std::shared_ptr<OneElevatorManager>(this), startingFloor)),
-		floors(),
 		customerGenerator(std::move(customerGenerator)),
+		floors(),
 		intervalDirstibution((double)normalDistributionIntervalParams.first, (double)normalDistributionIntervalParams.second),
-		nextCustomerArrivalTimePoint(Time::clock::now()),
-		randomEngine(ObjectFactory::seed),
 		worker(),
+		randomEngine(ObjectFactory::seed),
+		nextCustomerArrivalTimePoint(Time::clock::now()),
 		working(false),
 		generatePeople(true) {
 	std::move(std::begin(floorVector), std::end(floorVector), std::back_inserter(floors));
@@ -61,14 +61,14 @@ void OneElevatorManager::EnablePeopleGeneration() {
 
 void OneElevatorManager::CallElevator(std::unique_ptr<IPerson>&& person, Units::floor floorNumber) {
 	cabin->CallCabin(floorNumber);
-	floors[floorNumber]->JoinQueue(std::move(person));
+	floors[(size_t)floorNumber]->JoinQueue(std::move(person));
 }
 
 std::unique_ptr<IPerson> OneElevatorManager::GetCustomer(Units::floor floor, Units::direction cabinDirection) {
-	return std::move(floors[floor]->GetCustomer(cabinDirection));
+	return std::move(floors[(size_t)floor]->GetCustomer(cabinDirection));
 }
 std::optional<const IPerson*> OneElevatorManager::PeekCustomer(Units::floor floor, Units::direction cabinDirection) const {
-	return floors[floor]->PeekCustomer(cabinDirection);
+	return floors[(size_t)floor]->PeekCustomer(cabinDirection);
 }
 
 
@@ -106,5 +106,5 @@ void OneElevatorManager::GenerateNewCustomer(Time::timePoint timePoint) {
 
 	// must multiply by 1000 because intervalDistribution returns distribution in seconds
 	Time::deltaTime interval = std::chrono::milliseconds((long)(intervalDirstibution(randomEngine) * 1000));
-	nextCustomerArrivalTimePoint = Time::clock::now() + interval;
+	nextCustomerArrivalTimePoint = timePoint + interval;
 }

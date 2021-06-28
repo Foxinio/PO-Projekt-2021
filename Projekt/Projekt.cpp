@@ -25,7 +25,7 @@ int main()
 	
 
 	// work in infinite loop until commanded to stop
-	std::this_thread::sleep_for(1min);
+	std::this_thread::sleep_for(15s);
 
 	// stop simulation
 	manager->DisablePeopleGeneration();

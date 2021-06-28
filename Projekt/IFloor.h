@@ -7,6 +7,7 @@
 class IFloor
 {
 public:
+	virtual ~IFloor() = default;
 
 	virtual void JoinQueue(std::unique_ptr<IPerson>&& person) = 0;
 	virtual std::unique_ptr<IPerson> GetCustomer(Units::direction cabinDirection) = 0;

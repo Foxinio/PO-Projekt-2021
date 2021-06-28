@@ -51,9 +51,6 @@
     <ClCompile Include="FloorQueue.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Makefile">
-      <Filter>Source Files</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ObjectFactory.h">
@@ -105,5 +102,10 @@
     <None Include="ClassDiagram2.cd" />
     <None Include="README.md" />
     <None Include="ClassDiagram3.cd" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="Makefile">
+      <Filter>Source Files</Filter>
+    </Text>
   </ItemGroup>
 </Project>

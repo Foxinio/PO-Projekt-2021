@@ -17,12 +17,12 @@ DefaultCabin::DefaultCabin(std::shared_ptr<IElevatorManager> systemManager, Unit
 		IPhysicalCabin(startingFloor),
 		onBoardWeight(0),
 		passangers(),
-		destinationQueue([this](Units::floor lhs, Units::floor rhs) {	return priority_queueLess(lhs, rhs); }),
+		destinationQueue([&](Units::floor lhs, Units::floor rhs) {	return priority_queueLess(lhs, rhs); }),
 		destinationQueueMutex(),
 		systemManager(systemManager),
 		lastUpdateTimePoint(Time::clock::now()),
-		tag(ObjectFactory::GetCabinTag()),
-		lastLogUpdate(Time::clock::now()) { }
+		lastLogUpdate(Time::clock::now()),
+		tag(ObjectFactory::GetCabinTag()) { }
 
 DefaultCabin::DefaultCabin(std::shared_ptr<IElevatorManager> systemManager) :
 		DefaultCabin(systemManager, 0) { }
