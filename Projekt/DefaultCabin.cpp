@@ -13,7 +13,7 @@ std::optional<Units::floor> DefaultCabin::GetCurrentTargetFloor() {
 	return std::optional<Units::floor>{ this->destinationQueue.top() };
 }
 
-DefaultCabin::DefaultCabin(std::shared_ptr<IElevatorManager> systemManager, Units::floor startingFloor) :
+DefaultCabin::DefaultCabin(IElevatorManager& systemManager, Units::floor startingFloor) :
 		IPhysicalCabin(startingFloor),
 		passangers(),
 		destinationQueue([&](Units::floor lhs, Units::floor rhs) {	return priority_queueLess(lhs, rhs); }),
@@ -24,11 +24,11 @@ DefaultCabin::DefaultCabin(std::shared_ptr<IElevatorManager> systemManager, Unit
 		onBoardWeight(0),
 		tag(ObjectFactory::GetCabinTag()) { }
 
-DefaultCabin::DefaultCabin(std::shared_ptr<IElevatorManager> systemManager) :
+DefaultCabin::DefaultCabin(IElevatorManager& systemManager) :
 		DefaultCabin(systemManager, 0) { }
 
 void DefaultCabin::ArrivedAtFloor() {
-	systemManager->ElevatorArrived(*this);
+	systemManager.ElevatorArrived(*this);
 
 	std::unique_lock<std::mutex> lock(destinationQueueMutex);
 	assert(!destinationQueue.is_empty());
@@ -41,7 +41,7 @@ void DefaultCabin::ArrivedAtFloor() {
 	lock.unlock();
 
 
-	systemManager->ElevatorArrived(*this);
+	systemManager.ElevatorArrived(*this);
 
 	EmptyCabin(currentFloor);
 	ObjectFactory::PrintMessage("Cabin#"s + ObjectFactory::TagToString(tag), "Cabin emptied. Begining filling.");
@@ -69,11 +69,11 @@ void DefaultCabin::EmptyCabin(Units::floor currentFloor) {
 			++iter;
 		}
 	}
-	systemManager->PeopleLeftCabin(*this);
+	systemManager.PeopleLeftCabin(*this);
 }
 void DefaultCabin::FillCabin(Units::floor currentFloor) {
 	while (true) {
-		auto nextCustomer = systemManager->PeekCustomer(currentFloor, IPhysicalCabin::GetDirection());
+		auto nextCustomer = systemManager.PeekCustomer(currentFloor, IPhysicalCabin::GetDirection());
 
 		if (!nextCustomer.has_value()) {
 			break;
@@ -83,7 +83,7 @@ void DefaultCabin::FillCabin(Units::floor currentFloor) {
 			 nextCustomer.value()->DoesEnter(IPhysicalCabin::GetDirection()) &&
 			 this->passangers.size() < ObjectFactory::CabinCapacity) {
 			onBoardWeight += nextCustomer.value()->GetWeight();
-			EnterCabin(std::move(systemManager->GetCustomer(currentFloor, IPhysicalCabin::GetDirection())));
+			EnterCabin(std::move(systemManager.GetCustomer(currentFloor, IPhysicalCabin::GetDirection())));
 		}
 		else {
 			break;
@@ -97,7 +97,7 @@ void DefaultCabin::Update(Time::timePoint time) {
 		IPhysicalCabin::UpdatePosition(deltaTime);
 	}
 	else {
-		systemManager->ElevatorWithoutOrders(*this);
+		systemManager.ElevatorWithoutOrders(*this);
 		if (!GetCurrentTargetFloor().has_value()) return;
 	}
 

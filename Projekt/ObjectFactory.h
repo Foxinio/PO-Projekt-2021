@@ -33,10 +33,10 @@ public:
 	static std::string TagToString(std::uint32_t tag, std::uint32_t fill = 4);
 
 	// Get implementation of ICabin using default constructor
-	static std::unique_ptr<ICabin> GetCabin(std::shared_ptr<IElevatorManager> systemManagerReference);
+	static std::unique_ptr<ICabin> GetCabin(IElevatorManager& systemManagerReference);
 
 	// Get implementation of ICabin with starting floor
-	static std::unique_ptr<ICabin> GetCabin(std::shared_ptr<IElevatorManager> systemManagerReference,
+	static std::unique_ptr<ICabin> GetCabin(IElevatorManager& systemManagerReference,
 														 Units::floor startingFloor);
 
 	static std::uint32_t GetCabinTag();

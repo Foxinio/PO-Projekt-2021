@@ -58,12 +58,12 @@ void ObjectFactory::PrintMessage(std::string sender, std::string message) {
 }
 
 // Get implementation of ICabin using default constructor
-std::unique_ptr<ICabin> ObjectFactory::GetCabin(std::shared_ptr<IElevatorManager> systemManagerReference) {
+std::unique_ptr<ICabin> ObjectFactory::GetCabin(IElevatorManager& systemManagerReference) {
 	return std::make_unique<DefaultCabin>(systemManagerReference);
 }
 
 // Get implementation of ICabin with starting floor
-std::unique_ptr<ICabin> ObjectFactory::GetCabin(std::shared_ptr<IElevatorManager> systemManagerReference, Units::floor startingFloor) {
+std::unique_ptr<ICabin> ObjectFactory::GetCabin(IElevatorManager& systemManagerReference, Units::floor startingFloor) {
 	return std::make_unique<DefaultCabin>(systemManagerReference, startingFloor);
 }
 

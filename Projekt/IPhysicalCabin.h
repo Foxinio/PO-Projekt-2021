@@ -16,7 +16,8 @@ private:
 
 protected:
 
-	IPhysicalCabin(Units::floor startingFloor = 0);
+	IPhysicalCabin();
+	IPhysicalCabin(Units::floor startingFloor);
 
 	virtual std::optional<Units::floor> GetCurrentTargetFloor() = 0;
 

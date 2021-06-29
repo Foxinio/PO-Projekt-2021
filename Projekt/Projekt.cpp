@@ -3,7 +3,6 @@
 #include <chrono>
 
 #include "ObjectFactory.h"
-#include "IElevatorManager.h"
 
 int main()
 {
@@ -20,14 +19,17 @@ int main()
 
 	ObjectFactory::cabinUpdateFrequency = 2s;
 
-	auto manager = ObjectFactory::GetElevatorManager(8, { 10, 5 }, 4);
+	auto manager = ObjectFactory::GetElevatorManager(8, { 10, 5 }, 6);
 	manager->Start();
 	
 
 	// work in infinite loop until commanded to stop
-	std::this_thread::sleep_for(15s);
+	std::this_thread::sleep_for(1s);
+
+	
 
 	// stop simulation
 	manager->DisablePeopleGeneration();
 	manager->WaitForStop();
+	//manager->Stop();
 }

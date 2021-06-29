@@ -1,6 +1,9 @@
 #include "IPhysicalCabin.h"
 #include "ObjectFactory.h"
 
+IPhysicalCabin::IPhysicalCabin() :
+	IPhysicalCabin(0) { }
+
 IPhysicalCabin::IPhysicalCabin(Units::floor startingFloor) :
 	position(startingFloor),
 	velocity(0),

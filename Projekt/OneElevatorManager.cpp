@@ -14,7 +14,7 @@ OneElevatorManager::OneElevatorManager(std::vector<std::unique_ptr<IFloor>>&& fl
 													std::unique_ptr<IPeopleGenerator>&& customerGenerator,
 													std::pair<int, int> normalDistributionIntervalParams,
 													Units::floor startingFloor) :
-		cabin(ObjectFactory::GetCabin(std::shared_ptr<OneElevatorManager>(this), startingFloor)),
+		cabin(ObjectFactory::GetCabin(*this, startingFloor)),
 		customerGenerator(std::move(customerGenerator)),
 		floors(),
 		worker(),

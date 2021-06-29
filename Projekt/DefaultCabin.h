@@ -16,7 +16,7 @@ class DefaultCabin :
 	FloorQueue destinationQueue;
 	std::mutex destinationQueueMutex;
 
-	std::shared_ptr<IElevatorManager> systemManager;
+	IElevatorManager& systemManager;
 
 	Time::timePoint lastUpdateTimePoint;
 
@@ -25,8 +25,8 @@ class DefaultCabin :
 	Tag tag;
 
 public:
-	DefaultCabin(std::shared_ptr<IElevatorManager> systemManager, Units::floor startingFloor);
-	DefaultCabin(std::shared_ptr<IElevatorManager> systemManager);
+	DefaultCabin(IElevatorManager& systemManager, Units::floor startingFloor);
+	DefaultCabin(IElevatorManager& systemManager);
 
 	virtual ~DefaultCabin() = default;
 
